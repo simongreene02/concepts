@@ -58,6 +58,10 @@ public class LinkedListTest {
         assertThat(list.getFront()).isEqualTo("one");
     }
     @Test
+    public void getFront_empty() {
+        assertThat(list.getFront()).isNull();
+    }
+    @Test
     public void delete_positiveCase() {
         list.addAt("one", 0);
         list.addAt("two", 1);
@@ -87,7 +91,7 @@ public class LinkedListTest {
         list.addAt("two", 1);
         list.addAt("three", 2);
         list.deleteAll();
-        assertThat(list.getSize()).isEqualTo(0);
+        assertThat(list.isEmpty()).isTrue();
     }
     @Test
     public void contains_positiveCase() {
@@ -109,5 +113,14 @@ public class LinkedListTest {
         list.addAt("two", 1);
         list.addAt("three", 2);
         assertThat(list.getSize()).isEqualTo(3);
+    }
+    @Test
+    public void isEmpty() {
+        assertThat(list.isEmpty()).isTrue();
+    }
+    @Test
+    public void isEmpty_false() {
+        list.addAt("blank", 0);
+        assertThat(list.isEmpty()).isFalse();
     }
 }
