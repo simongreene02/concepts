@@ -1,14 +1,17 @@
-package com.greatworksinc.concepts.linkedlist;
+package com.greatworksinc.concepts.unsafell;
 
 import com.google.common.base.Preconditions;
+import com.greatworksinc.concepts.linkedlist.LinkedList;
 
 import javax.annotation.Nullable;
 
-public class Node {
-    private String content;
-    private @Nullable Node nextItem;
+public class UnSafeNode {
 
-    public Node(String content, @Nullable Node nextItem) {
+    private String content;
+    private @Nullable
+    UnSafeNode nextItem;
+
+    public UnSafeNode(String content, @Nullable UnSafeNode nextItem) {
         this.content = Preconditions.checkNotNull(content);
         this.nextItem = nextItem;
     }
@@ -17,11 +20,11 @@ public class Node {
         return content;
     }
 
-    public Node getNextItem() {
+    public UnSafeNode getNextItem() {
         return nextItem;
     }
 
-    public void setNextItem(@Nullable Node nextItem) {
+    public void setNextItem(@Nullable UnSafeNode nextItem) {
         this.nextItem = nextItem;
     }
 }
