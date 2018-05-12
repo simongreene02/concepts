@@ -24,4 +24,90 @@ public class LinkedListTest {
     public void addAt_indexTooHigh() {
         list.addAt("blank", 1);
     }
+    @Test
+    public void getAt_positiveCase() {
+        list.addAt("blank", 0);
+        assertThat(list.getAt(0)).isEqualTo("blank");
+    }
+    @Test
+    public void getAt_positiveCase_twoItems() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        assertThat(list.getAt(1)).isEqualTo("two");
+    }
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void getAt_indexTooLow() {
+        list.getAt(-1);
+    }
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void getAt_indexTooHigh() {
+        list.getAt(1);
+    }
+    @Test
+    public void getEnd() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        list.addAt("three", 2);
+        assertThat(list.getEnd()).isEqualTo("three");
+    }
+    @Test
+    public void getFront() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        list.addAt("three", 2);
+        assertThat(list.getFront()).isEqualTo("one");
+    }
+    @Test
+    public void delete_positiveCase() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        list.addAt("three", 2);
+        list.delete(1);
+        assertThat(list.getFront()).isEqualTo("one");
+        assertThat(list.getEnd()).isEqualTo("three");
+        assertThat(list.getSize()).isEqualTo(2);
+    }
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void delete_indexTooLow() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        list.addAt("three", 2);
+        list.delete(-1);
+    }
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void delete_indexTooHigh() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        list.addAt("three", 2);
+        list.delete(3);
+    }
+    @Test
+    public void deleteAll() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        list.addAt("three", 2);
+        list.deleteAll();
+        assertThat(list.getSize()).isEqualTo(0);
+    }
+    @Test
+    public void contains_positiveCase() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        list.addAt("three", 2);
+        assertThat(list.contains("one")).isTrue();
+    }
+    @Test
+    public void contains_negativeCase() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        list.addAt("three", 2);
+        assertThat(list.contains("four")).isFalse();
+    }
+    @Test
+    public void getSize() {
+        list.addAt("one", 0);
+        list.addAt("two", 1);
+        list.addAt("three", 2);
+        assertThat(list.getSize()).isEqualTo(3);
+    }
 }
