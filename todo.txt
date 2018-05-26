@@ -1,2 +1,2 @@
--Create unit tests
--Clean up delete
+-Add indexOf.
+-Performance test of listTypes;

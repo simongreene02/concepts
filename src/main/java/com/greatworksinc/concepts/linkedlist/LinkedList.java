@@ -3,14 +3,15 @@ package com.greatworksinc.concepts.linkedlist;
 import com.google.common.base.Preconditions;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
+import java.util.*;
 
-public class LinkedList {
+public class LinkedList extends AbstractList<String> {
 
     private Node root;
     private int size;
 
-    public void addAt(String content, int index) {
+    @Override
+    public void add(int index, String content) {
         if (index < 0) {
             throw new IndexOutOfBoundsException(String.format("Index (%d) must be zero or greater.", index));
         }
@@ -29,7 +30,8 @@ public class LinkedList {
         selectedNode.setNextItem(new Node(content, selectedNode.getNextItem()));
     }
 
-    public String getAt(int index) {
+    @Override
+    public String get(int index) {
         if (index < 0) {
             throw new IndexOutOfBoundsException(String.format("Index (%d) must be zero or greater.", index));
         }
@@ -44,24 +46,8 @@ public class LinkedList {
         return selected.getContent();
     }
 
-    public @Nullable String getEnd() {
-        if (isCircular()) {return null;}
-        Node node = root;
-        while (node.getNextItem() != null) {
-            node = node.getNextItem();
-        }
-        return node.getContent();
-    }
-    public @Nullable String getFront() {
-        if (root == null) {
-            return null;
-        }
-        return root.getContent();
-    }
 
-    public boolean isEmpty() {
-        return root == null;
-    }
+
 
     public boolean isCircular() {
         ArrayList<Node> nodes = new ArrayList<Node>();
@@ -77,7 +63,9 @@ public class LinkedList {
             }
         }
     }
-    public void delete(int index) {
+
+    @Override
+    public String remove(int index) {
         if (index < 0) {
             throw new IndexOutOfBoundsException(String.format("Index (%d) must be zero or greater.", index));
         }
@@ -85,29 +73,70 @@ public class LinkedList {
             throw new IndexOutOfBoundsException(String.format("Index (%d) must be less than or equal to size (%d).", index, size));
         }
         size--;
+        String removedValue;
         if (index == 0) {
+            removedValue = root.getContent();
             root = root.getNextItem();
-            return;
+            return removedValue;
         }
         Node selectedNode = root;
         for (int i = 1; i < index; i++) {
             selectedNode = selectedNode.getNextItem();
         }
-        selectedNode.setNextItem(selectedNode.getNextItem().getNextItem());
+        Node itemToDelete = selectedNode.getNextItem();
+        removedValue = itemToDelete.getContent();
+        selectedNode.setNextItem(itemToDelete.getNextItem());
+        return removedValue;
     }
-    public void deleteAll() {
+
+    @Override
+    public int indexOf(Object o) {
+        if (o == null) {
+            throw new NullPointerException("Object must not be null.");
+        }
+        if (!(o instanceof String)) {
+            throw new ClassCastException("Object must be a String.");
+        }
+        int index = 0;
+        Node node = root;
+        while (node.getNextItem() != null && !node.getContent().equals(o)) {
+            node = node.getNextItem();
+            index++;
+        }
+        if (!node.getContent().equals(o)) {
+            return -1;
+        }
+        return index;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public void clear() {
         root = null;
         size = 0;
     }
-    // FindDuplicates
-    public boolean contains(String str) {
+
+    @Override
+    public boolean contains(Object o) {
+        if (o == null) {
+            throw new NullPointerException("Object must not be null.");
+        }
+        if (!(o instanceof String)) {
+            throw new ClassCastException("Object must be a String.");
+        }
         Node node = root;
-        while (node.getNextItem() != null && !node.getContent().equals(str)) {
+        while (node.getNextItem() != null && !node.getContent().equals(o)) {
             node = node.getNextItem();
         }
-        return node.getContent().equals(str);
+        return node.getContent().equals(o);
     }
-    public int getSize() {
+
+    @Override
+    public int size() {
         return size;
     }
 
@@ -123,6 +152,10 @@ public class LinkedList {
 
         public String getContent() {
             return content;
+        }
+
+        public void setContent(String newValue) {
+            content = newValue;
         }
 
         public Node getNextItem() {
