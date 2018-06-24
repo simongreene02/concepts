@@ -13,4 +13,9 @@ public class DeleteCommand implements Command {
     public void execute(List<String> list) {
         list.remove(index);
     }
+
+    @Override
+    public String getName() {
+        return "Delete-" + index;
+    }
 }

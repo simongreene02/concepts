@@ -13,4 +13,9 @@ public class RetrieveCommand implements Command {
     public void execute(List<String> list) {
         list.get(index);
     }
+
+    @Override
+    public String getName() {
+        return "Retrieve-" + index;
+    }
 }

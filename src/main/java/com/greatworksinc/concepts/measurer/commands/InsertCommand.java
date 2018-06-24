@@ -15,4 +15,9 @@ public class InsertCommand implements Command {
     public void execute(List<String> list) {
         list.add(index, item);
     }
+
+    @Override
+    public String getName() {
+        return "Insert-" + index;
+    }
 }

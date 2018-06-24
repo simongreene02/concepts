@@ -13,4 +13,9 @@ public class SearchCommand implements Command {
     public void execute(List<String> list) {
         list.indexOf(target);
     }
+
+    @Override
+    public String getName() {
+        return "Search-" + target;
+    }
 }

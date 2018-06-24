@@ -8,4 +8,6 @@ public interface Command {
      * @param list The list that the command will be performed on.
      */
     void execute(List<String> list);
+
+    String getName();
 }
