@@ -1,4 +1,4 @@
-Two classes are needed, one representing the peg, and the other representing the rung.
+Two classes are needed, one representing the peg, and the other representing the disc.
 
 ## Rung
 #### Attributes
