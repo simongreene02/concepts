@@ -3,6 +3,8 @@ package com.greatworksinc.concepts.towerofhanoi;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static com.google.common.truth.Truth.assertThat;
 
 public class PegTest {
@@ -41,10 +43,35 @@ public class PegTest {
     }
 
     @Test
-    public void removeDisc() {
+    public void removeDisc_empty() {
+        assertThat(peg.removeDisc()).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void removeDisc_oneDisc() {
+        Disc disc = new Disc(1);
+        peg.addDisc(disc);
+        assertThat(peg.removeDisc().get()).isEqualTo(disc);
+    }
+
+    @Test
+    public void removeDisc_twoDiscs() {
+        Disc smallDisc = new Disc(1);
+        Disc largeDisc = new Disc(2);
+        peg.addDisc(largeDisc);
+        peg.addDisc(smallDisc);
+        assertThat(peg.removeDisc().get()).isEqualTo(smallDisc);
+        assertThat(peg.removeDisc().get()).isEqualTo(largeDisc);
     }
 
     @Test
     public void getSize() {
+        Disc smallDisc = new Disc(1);
+        Disc largeDisc = new Disc(2);
+        assertThat(peg.getSize()).isEqualTo(0);
+        peg.addDisc(largeDisc);
+        assertThat(peg.getSize()).isEqualTo(1);
+        peg.addDisc(smallDisc);
+        assertThat(peg.getSize()).isEqualTo(2);
     }
 }

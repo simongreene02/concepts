@@ -1,6 +1,6 @@
 Two classes are needed, one representing the peg, and the other representing the disc.
 
-## Rung
+## Disc
 #### Attributes
 * (int) Size
 #### Methods
@@ -8,10 +8,10 @@ Two classes are needed, one representing the peg, and the other representing the
 
 ## Peg
 #### Attributes
-* (Stack) Rungs
+* (Stack) Discs
 #### Methods
-* (Rung) addRung
-* removeRung (Rung)
+* (Disc) addDisc
+* removeDisc (Disc)
 * getSize (int)
 
 ## Board
@@ -19,7 +19,7 @@ Two classes are needed, one representing the peg, and the other representing the
 * (Peg) leftPeg
 * (Peg) middlePeg
 * (Peg) rightPeg
-* (int) Number of Rungs
+* (int) Number of Discs
 #### Methods
 * (Peg from) (Peg to) transferRung (boolean)
 * isGameDone (boolean)
