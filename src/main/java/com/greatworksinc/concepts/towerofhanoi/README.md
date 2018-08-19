@@ -21,7 +21,7 @@ Two classes are needed, one representing the peg, and the other representing the
 * (Peg) rightPeg
 * (int) Number of Discs
 #### Methods
-* (Peg from) (Peg to) transferRung (boolean)
+* (Peg from) (Peg to) transferDisc (boolean)
 * isGameDone (boolean)
 * getTransitions()
 
