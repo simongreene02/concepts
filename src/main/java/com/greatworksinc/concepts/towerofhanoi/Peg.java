@@ -6,9 +6,11 @@ import java.util.Stack;
 
 public class Peg {
     private Stack<Disc> discs;
+
     public Peg() {
         discs = new Stack<Disc>();
     }
+
     public boolean addDisc(Disc disc) {
         if (!discs.empty() && !discs.peek().isBiggerThan(disc)) {
             return false;
@@ -16,14 +18,20 @@ public class Peg {
             return discs.add(disc);
         }
     }
+
     public Optional<Disc> removeDisc() {
         try {
             return Optional.of(discs.pop());
-        } catch(EmptyStackException e) {
+        } catch (EmptyStackException e) {
             return Optional.empty();
         }
     }
+
     public int getSize() {
         return discs.size();
+    }
+
+    public boolean isEmpty() {
+        return discs.isEmpty();
     }
 }
