@@ -39,12 +39,10 @@ public class Board {
      * @param to
      * @return {@code true} if transfer is successful; otherwise {@code false}
      */
-    @VisibleForTesting boolean transferDisc(Peg from, Peg to) {
+    @VisibleForTesting static boolean transferDisc(Peg from, Peg to) {
         if (!from.isEmpty()) {
             Disc tempDisc = from.removeDisc().get();
             if (to.addDisc(tempDisc)) {
-                //log.info(leftPeg.getSize() + " " + middlePeg.getSize() + " " + rightPeg.getSize());
-                log.info("{} {} {}", leftPeg.getSize(), middlePeg.getSize(), rightPeg.getSize());
                 return true;
             } else {
                 from.addDisc(tempDisc);
@@ -53,7 +51,24 @@ public class Board {
         return false;
     }
 
-    public boolean transferByEnum()
+    public boolean transferByEnum(MoveEnum moveEnum) {
+        log.info("{} {} {}", leftPeg.getSize(), middlePeg.getSize(), rightPeg.getSize());
+        if (moveEnum == MoveEnum.LEFT_TO_MIDDLE) {
+            return transferDisc(leftPeg, middlePeg);
+        } else if (moveEnum == MoveEnum.LEFT_TO_RIGHT) {
+            return transferDisc(leftPeg, rightPeg);
+        } else if (moveEnum == MoveEnum.MIDDLE_TO_LEFT) {
+            return transferDisc(middlePeg, leftPeg);
+        } else if (moveEnum == MoveEnum.MIDDLE_TO_RIGHT) {
+            return transferDisc(middlePeg, rightPeg);
+        } else if (moveEnum == MoveEnum.RIGHT_TO_LEFT) {
+            return transferDisc(rightPeg, leftPeg);
+        } else if (moveEnum == MoveEnum.RIGHT_TO_MIDDLE) {
+            return transferDisc(rightPeg, middlePeg);
+        } else {
+            return false;
+        }
+    }
 
     public boolean isGameDone() {
         return leftPeg.isEmpty() && middlePeg.isEmpty() && rightPeg.getSize() == numberOfDiscs;
