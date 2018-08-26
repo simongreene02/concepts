@@ -5,19 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Board {
+    //TODO: Add VisibleForTesting constructor that allows for the direct insertion of pegs.
+
     private static final Logger log = LoggerFactory.getLogger(Board.class);
-
-    public Peg getLeftPeg() {
-        return leftPeg;
-    }
-
-    public Peg getMiddlePeg() {
-        return middlePeg;
-    }
-
-    public Peg getRightPeg() {
-        return rightPeg;
-    }
 
     private final Peg leftPeg;
     private final Peg middlePeg;
@@ -32,6 +22,19 @@ public class Board {
         for (int i = this.numberOfDiscs; i > 0; i--) {
             leftPeg.addDisc(new Disc(i));
         }
+    }
+
+
+    @VisibleForTesting Peg getLeftPeg() {
+        return leftPeg;
+    }
+
+    @VisibleForTesting Peg getMiddlePeg() {
+        return middlePeg;
+    }
+
+    @VisibleForTesting Peg getRightPeg() {
+        return rightPeg;
     }
 
     /**

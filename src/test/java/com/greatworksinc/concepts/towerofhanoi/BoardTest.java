@@ -75,4 +75,20 @@ public class BoardTest {
         assertThat(from.isEmpty()).isTrue();
         assertThat(to.getSize()).isEqualTo(2);
     }
+
+    @Test
+    public void transferByEnum_leftToMiddle() {
+        assertThat(board.transferByEnum(MoveEnum.LEFT_TO_MIDDLE)).isTrue();
+        assertThat(board.getLeftPeg().getSize()).isEqualTo(2);
+        assertThat(board.getMiddlePeg().getSize()).isEqualTo(1);
+        assertThat(board.getRightPeg().isEmpty()).isTrue();
+    }
+
+    @Test
+    public void transferByEnum_leftToRight() {
+        assertThat(board.transferByEnum(MoveEnum.LEFT_TO_RIGHT)).isTrue();
+        assertThat(board.getLeftPeg().getSize()).isEqualTo(2);
+        assertThat(board.getMiddlePeg().isEmpty()).isTrue();
+        assertThat(board.getRightPeg().getSize()).isEqualTo(1);
+    }
 }
