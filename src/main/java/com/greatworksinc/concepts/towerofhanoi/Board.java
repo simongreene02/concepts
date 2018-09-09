@@ -15,9 +15,13 @@ public class Board {
     private final int numberOfDiscs;
 
     public Board(int numberOfDiscs) {
-        this.leftPeg = new Peg();
-        this.middlePeg = new Peg();
-        this.rightPeg = new Peg();
+        this(new Peg(), new Peg(), new Peg(), numberOfDiscs);
+    }
+
+    @VisibleForTesting Board(Peg leftPeg, Peg middlePeg, Peg rightPeg, int numberOfDiscs) {
+        this.leftPeg = leftPeg;
+        this.middlePeg = middlePeg;
+        this.rightPeg = rightPeg;
         this.numberOfDiscs = numberOfDiscs;
         for (int i = this.numberOfDiscs; i > 0; i--) {
             leftPeg.addDisc(new Disc(i));
@@ -56,6 +60,7 @@ public class Board {
 
     public boolean transferByEnum(MoveEnum moveEnum) {
         log.info("{} {} {}", leftPeg.getSize(), middlePeg.getSize(), rightPeg.getSize());
+        //TODO: Only print on sucessful transfer.
         if (moveEnum == MoveEnum.LEFT_TO_MIDDLE) {
             return transferDisc(leftPeg, middlePeg);
         } else if (moveEnum == MoveEnum.LEFT_TO_RIGHT) {
@@ -77,4 +82,7 @@ public class Board {
         return leftPeg.isEmpty() && middlePeg.isEmpty() && rightPeg.getSize() == numberOfDiscs;
     }
 
+    public int getNumberOfDiscs() {
+        return numberOfDiscs;
+    }
 }

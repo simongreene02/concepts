@@ -91,4 +91,5 @@ public class BoardTest {
         assertThat(board.getMiddlePeg().isEmpty()).isTrue();
         assertThat(board.getRightPeg().getSize()).isEqualTo(1);
     }
+    //TODO: Finish transferByEnum tests.
 }
