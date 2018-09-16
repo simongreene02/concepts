@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Board {
-    //TODO: Add VisibleForTesting constructor that allows for the direct insertion of pegs.
 
     private static final Logger log = LoggerFactory.getLogger(Board.class);
 
@@ -46,10 +45,11 @@ public class Board {
      * @param to
      * @return {@code true} if transfer is successful; otherwise {@code false}
      */
-    @VisibleForTesting static boolean transferDisc(Peg from, Peg to) {
+    @VisibleForTesting boolean transferDisc(Peg from, Peg to) {
         if (!from.isEmpty()) {
             Disc tempDisc = from.removeDisc().get();
             if (to.addDisc(tempDisc)) {
+                log.info("{} {} {}", leftPeg.getSize(), middlePeg.getSize(), rightPeg.getSize());
                 return true;
             } else {
                 from.addDisc(tempDisc);
@@ -59,8 +59,6 @@ public class Board {
     }
 
     public boolean transferByEnum(MoveEnum moveEnum) {
-        log.info("{} {} {}", leftPeg.getSize(), middlePeg.getSize(), rightPeg.getSize());
-        //TODO: Only print on sucessful transfer.
         if (moveEnum == MoveEnum.LEFT_TO_MIDDLE) {
             return transferDisc(leftPeg, middlePeg);
         } else if (moveEnum == MoveEnum.LEFT_TO_RIGHT) {
