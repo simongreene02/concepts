@@ -1,2 +1,15 @@
 -Add indexOf.
 -Performance test of listTypes;
+
+A 1 2 3  --> ref0895
+B 1 2 3  --> reffer45
+
+100 = hashcode(ref0895)
+800 = hashcode(reffer45)
+
+3 row
+12= hashcode(reffere)
+17 = hashcode(reffccc5)
+7 = hashcode(ref444d5)
+
+(12 + 17 + 7)
