@@ -36,6 +36,24 @@ public class Matrix {
         throw new IllegalArgumentException("Matrixes must be the same size.");
     }
 
+    public static Matrix multiply(Matrix matrix1, Matrix matrix2) {
+        if (matrix1.y != matrix2.x) {
+            throw new IllegalArgumentException("The Y value of the first matrix must be the same as the X value of the second.");
+        }
+        int[][] output = new int[matrix2.y][matrix1.x];
+        if (output.length == 0) {
+            return new Matrix(output);
+        }
+        for (int i = 0; i < output.length; i++) {
+            for (int j = 0; j < output[0].length; j++) {
+                for (int k = 0; k < matrix1.y; k++) {
+                    output[i][j] += (matrix1.getValue(k, i)*matrix2.getValue(j, k));
+                }
+            }
+        }
+        return new Matrix(output);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
