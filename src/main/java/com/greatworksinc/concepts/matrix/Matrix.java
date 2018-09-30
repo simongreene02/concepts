@@ -6,29 +6,29 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Matrix {
-    private final int [][] values;
-    private final int x;
-    private final int y;
+    private final int[][] values;
+    private final int col;
+    private final int row;
 
     public Matrix(int[][] values) {
         this.values = values.clone();
-        y = values.length;
-        x = y==0 ? 0 : values[0].length;
+        row = values.length;
+        col = row == 0 ? 0 : values[0].length;
     }
 
-    public int getValue(int x, int y) {
-        if (x >= this.x || y >= this.y) {
-            throw new IllegalArgumentException("The X and Y values must be smaller than the matrix size.");
+    public int getValue(int row, int col) {
+        if (col >= this.col || row >= this.row) {
+            throw new IllegalArgumentException("The row and column values must be smaller than the matrix size.");
         }
-        return values[y][x];
+        return values[row][col];
     }
 
     public static Matrix add(Matrix matrix1, Matrix matrix2) {
-        if (matrix1.x == matrix2.x && matrix1.y == matrix2.y) {
-            int[][] sumValues = new int[matrix1.y][matrix1.x];
-            for (int i = 0; i < matrix1.y; i++) {
-                for (int j = 0; j < matrix1.x; j++) {
-                    sumValues[i][j] = matrix1.getValue(j, i) + matrix2.getValue(j, i);
+        if (matrix1.col == matrix2.col && matrix1.row == matrix2.row) {
+            int[][] sumValues = new int[matrix1.row][matrix1.col];
+            for (int i = 0; i < matrix1.row; i++) {
+                for (int j = 0; j < matrix1.col; j++) {
+                    sumValues[i][j] = matrix1.getValue(i, j) + matrix2.getValue(i, j);
                 }
             }
             return new Matrix(sumValues);
@@ -37,17 +37,17 @@ public class Matrix {
     }
 
     public static Matrix multiply(Matrix matrix1, Matrix matrix2) {
-        if (matrix1.y != matrix2.x) {
+        if (matrix1.col != matrix2.row) {
             throw new IllegalArgumentException("The Y value of the first matrix must be the same as the X value of the second.");
         }
-        int[][] output = new int[matrix2.y][matrix1.x];
+        int[][] output = new int[matrix1.row][matrix2.col];
         if (output.length == 0) {
             return new Matrix(output);
         }
-        for (int i = 0; i < output.length; i++) {
-            for (int j = 0; j < output[0].length; j++) {
-                for (int k = 0; k < matrix1.y; k++) {
-                    output[i][j] += (matrix1.getValue(k, i)*matrix2.getValue(j, k));
+        for (int i = 0; i < matrix1.row; i++) {
+            for (int j = 0; j < matrix2.col; j++) {
+                for (int k = 0; k < matrix1.col; k++) {
+                    output[i][j] += (matrix1.getValue(i, k) * matrix2.getValue(k, j));
                 }
             }
         }
@@ -55,10 +55,10 @@ public class Matrix {
     }
 
     public static Matrix transpose(Matrix matrix) {
-        int[][] output = new int[matrix.x][matrix.y];
-        for (int i = 0; i < matrix.x; i++) {
-            for (int j = 0; j < matrix.y; j++) {
-                output[i][j] += matrix.getValue(i, j);
+        int[][] output = new int[matrix.col][matrix.row];
+        for (int i = 0; i < matrix.col; i++) {
+            for (int j = 0; j < matrix.row; j++) {
+                output[i][j] += matrix.getValue(j, i);
             }
         }
         return new Matrix(output);
@@ -69,13 +69,13 @@ public class Matrix {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Matrix matrix = (Matrix) o;
-        return x == matrix.x &&
-                y == matrix.y &&
+        return col == matrix.col &&
+                row == matrix.row &&
                 valuesEqual(matrix);
     }
 
     private boolean valuesEqual(Matrix other) {
-        for (int i = 0; i < y; i++) {
+        for (int i = 0; i < row; i++) {
             if (!Arrays.equals(values[i], other.values[i])) {
                 return false;
             }
@@ -86,14 +86,14 @@ public class Matrix {
     @Override
     public int hashCode() {
 
-        int result = Objects.hash(x, y);
+        int result = Objects.hash(col, row);
         result = 31 * result + valuesHashCode();
         return result;
     }
 
     private int valuesHashCode() {
         int output = 0;
-        for (int i = 0; i < y; i++) {
+        for (int i = 0; i < row; i++) {
             output += Arrays.hashCode(values[i]);
         }
         return output;
@@ -103,8 +103,8 @@ public class Matrix {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("values", Arrays.toString(values))
-                .add("x", x)
-                .add("y", y)
+                .add("row", row)
+                .add("col", col)
                 .toString();
     }
 }
