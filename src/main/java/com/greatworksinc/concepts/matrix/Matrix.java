@@ -54,6 +54,16 @@ public class Matrix {
         return new Matrix(output);
     }
 
+    public static Matrix transpose(Matrix matrix) {
+        int[][] output = new int[matrix.x][matrix.y];
+        for (int i = 0; i < matrix.x; i++) {
+            for (int j = 0; j < matrix.y; j++) {
+                output[i][j] += matrix.getValue(i, j);
+            }
+        }
+        return new Matrix(output);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

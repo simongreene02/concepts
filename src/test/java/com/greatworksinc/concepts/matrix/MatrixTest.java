@@ -39,4 +39,10 @@ public class MatrixTest {
         assertThat(Matrix.multiply(matrix1, matrix2)).isEqualTo(new Matrix(new int[][]{{12, 15, 18}, {16, 20, 24}, {12, 15, 18}}));
     }
 
+    @Test
+    public void tanspose_positive() {
+        Matrix matrix2 = new Matrix(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
+        assertThat(Matrix.transpose(matrix2)).isEqualTo(new Matrix(new int[][]{{1, 4, 7}, {2, 5, 8}, {3, 6, 9}}));
+    }
+
 }
