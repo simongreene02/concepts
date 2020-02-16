@@ -3,19 +3,19 @@ package com.greatworksinc.concepts.measurer.commands;
 import java.util.List;
 
 public class DeleteCommand implements Command {
-    private final int index;
+  private final int index;
 
-    public DeleteCommand(int index) {
-        this.index = index;
-    }
+  public DeleteCommand(int index) {
+    this.index = index;
+  }
 
-    @Override
-    public void execute(List<String> list) {
-        list.remove(index);
-    }
+  @Override
+  public void execute(List<String> list) {
+    list.remove(index);
+  }
 
-    @Override
-    public String getName() {
-        return "Delete-" + index;
-    }
+  @Override
+  public String getName() {
+    return "Delete-" + index;
+  }
 }
