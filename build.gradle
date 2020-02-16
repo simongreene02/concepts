@@ -1,24 +1,86 @@
-group 'greatWorksInc'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-apply plugin: 'application'
-
-sourceCompatibility = 1.8
-mainClassName = 'com.greatworksinc.concepts.towerofhanoi.Main'
-
+buildscript {
+    ext.appGroup = 'com.djd.gig'
+    ext.appVersion = '1.2-SNAPSHOT'
+    ext.appDescription = 'gradle template'
+    ext.slf4jVersion = '1.7.28'         // Latest as of 2019-08-10
+    ext.guavaVersion = '28.1-jre'       // Latest as of 2019-08-28
+    ext.spotlessVersion = '3.25.0'      // Latest as of 2019-10-07
+    ext.jacocoVersion = '0.8.5'         // Latest as of 2019-10-11
+    ext.formatVersion = '0.8'           // Latest as of 2018-11-29
+    ext.junitPlatformVersion = '1.5.2'  // Latest as of 2019-09-08
+    ext.junitJupiterVersion = '5.5.2'   // Latest as of 2019-09-08
+    ext.mockitoVersion = '3.2.0'        // Latest as of 2019-11-29
+    ext.truthCoreVersion = '1.0'        // Latest as of 2019-07-08
+}
+plugins {
+    id('application') // distZip needs this plugin also need mainClassName
+    id('java')
+    id('jacoco')
+    id('com.diffplug.gradle.spotless') version "$spotlessVersion"
+    id('com.github.sherter.google-java-format') version "$formatVersion"
+}
 repositories {
-    mavenCentral()
+    jcenter() // Superset of mavenCentral() and performance is better
 }
-
+application {
+    // This is required for application plugin to run distZip task
+    mainClassName = 'com.greatworksinc.concepts.Main'
+}
 dependencies {
-    // Commons
-    compile group: 'org.slf4j', name: 'slf4j-simple', version:'1.7.21'
-    compile group: 'com.google.guava', name: 'guava', version:'23.0'
-    compile group: 'com.google.code.findbugs', name: 'jsr305', version:'3.0.1'
+    implementation("org.slf4j:slf4j-simple:${slf4jVersion}")
+    implementation("com.google.guava:guava:${guavaVersion}")
 
-    testCompile group: 'junit', name: 'junit', version:'4.12'
-    testCompile group: 'org.mockito', name: 'mockito-all', version:'1.10.18'
-    testCompile group: 'com.google.truth', name: 'truth', version:'0.30'
-    testCompile group: 'com.google.guava', name: 'guava-testlib', version:'23.0'
+    //--- test dependencies ---//
+
+    // junit platform
+    testImplementation("org.junit.platform:junit-platform-engine:${junitPlatformVersion}")
+    testImplementation("org.junit.platform:junit-platform-runner:${junitPlatformVersion}")
+
+    // junit jupiter
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${junitJupiterVersion}")
+
+    // truth
+    testImplementation("com.google.truth:truth:${truthCoreVersion}")
+
+    // mockito
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+
 }
+spotless {
+    java {
+        // Check code format upon build
+        googleJavaFormat()
+    }
+}
+test {
+    useJUnitPlatform()
+}
+jacoco {
+    toolVersion = "$jacocoVersion"
+}
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 1.0
+            }
+        }
+    }
+}
+
+group("$appGroup")
+version("$appVersion")
+description("$appDescription")
+
+// Applies code format before compileJava task
+compileJava.dependsOn(spotlessApply)
+
+// Creates Html format of jacoco test coverage report in resports/jacoco at the end of the test.
+test.finalizedBy(jacocoTestReport)
+
+// Fails build if test coverage is below the limit. See jacocoTestCoverageVerification task block.
+check.dependsOn(jacocoTestCoverageVerification)
