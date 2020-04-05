@@ -11,6 +11,6 @@ class PersonFactoryTest {
   void createPerson()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException,
           InstantiationException, IllegalAccessException, NoSuchFieldException {
-    assertThat(PersonFactory.createPerson()).isEqualTo("");
+    assertThat(PersonFactory.createPerson()).isEqualTo(PersonFactory.createPerson());
   }
 }
