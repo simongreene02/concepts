@@ -35,4 +35,9 @@ public class Node<T extends Comparable> {
   public void setRight(Node<T> right) {
     this.right = right;
   }
+
+  @Override
+  public String toString() {
+    return "Node{" + "value=" + value + ", left=" + left + ", right=" + right + '}';
+  }
 }

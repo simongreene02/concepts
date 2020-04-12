@@ -38,4 +38,42 @@ public class BinarySearchTree<T extends Comparable> {
       }
     }
   }
+
+  public Node<T> insertRecursive(T value) {
+    if (rootNode == null) {
+      rootNode = new Node<T>(value);
+      return rootNode;
+    }
+    return insertRecursion(value, rootNode);
+  }
+
+  //  private Node insertRec(Node root, int key) {
+  //    if (root == null) {
+  //      root = new Node(key);
+  //      return root;
+  //    }
+  //    if (key < root.key) {
+  //      root.left = insertRec(root.left, key);
+  //    } else if (key > root.key) {
+  //      root.right = insertRec(root.right, key);
+  //    }
+  //    return root;
+  //  }
+
+  private Node<T> insertRecursion(T value, Node<T> node) {
+    if (node == null) {
+      return new Node<T>(value);
+    }
+    int valueComparison = value.compareTo(node.getValue());
+    if (valueComparison < 0) {
+      node.setLeft(insertRecursion(value, node.getLeft()));
+    } else if (valueComparison > 0) {
+      node.setRight(insertRecursion(value, node.getRight()));
+    }
+    return node;
+  }
+
+  public Node<T> getRootNode() {
+    return rootNode;
+  }
 }
