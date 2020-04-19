@@ -36,6 +36,10 @@ public class Node<T extends Comparable> {
     this.right = right;
   }
 
+  public boolean isLeafNode() {
+    return left == null && right == null;
+  }
+
   @Override
   public String toString() {
     return "Node{" + "value=" + value + ", left=" + left + ", right=" + right + '}';
