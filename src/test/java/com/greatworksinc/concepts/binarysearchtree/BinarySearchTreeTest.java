@@ -55,18 +55,21 @@ class BinarySearchTreeTest {
     assertThat(node.getRight()).isNull();
   }
 
-  @Test
-  void insertRecursive_twoItems_symmetrical() {
-    Node<Integer> nodeZero = bst.insertRecursive(0);
-    Node<Integer> nodeNegative = bst.insertRecursive(-1);
-    Node<Integer> nodePositive = bst.insertRecursive(1);
-    assertThat(nodeZero.getLeft()).isEqualTo(nodeNegative);
-    assertThat(nodeZero.getRight()).isEqualTo(nodePositive);
-    assertThat(nodeNegative.getLeft()).isNull();
-    assertThat(nodeNegative.getRight()).isNull();
-    assertThat(nodePositive.getLeft()).isNull();
-    assertThat(nodePositive.getRight()).isNull();
-  }
+  //  @Test
+  //  void insertRecursive_twoItems_symmetrical() {
+  //    Node<Integer> nodeZero = bst.insertRecursive(0);
+  //    Node<Integer> nodeNegative = bst.insertRecursive(-1);
+  //    Node<Integer> nodePositive = bst.insertRecursive(1);
+  //    assertThat(nodeZero.getValue()).isEqualTo(0);
+  //    assertThat(nodeNegative.getValue()).isEqualTo(-1);
+  //    assertThat(nodePositive.getValue()).isEqualTo(1);
+  //    assertThat(nodeZero.getLeft()).isEqualTo(nodeNegative);
+  //    assertThat(nodeZero.getRight()).isEqualTo(nodePositive);
+  //    assertThat(nodeNegative.getLeft()).isNull();
+  //    assertThat(nodeNegative.getRight()).isNull();
+  //    assertThat(nodePositive.getLeft()).isNull();
+  //    assertThat(nodePositive.getRight()).isNull();
+  //  }
 
   /*
 
