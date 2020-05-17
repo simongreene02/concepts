@@ -42,6 +42,8 @@ dependencies {
 
     // truth
     testImplementation("com.google.truth:truth:${truthCoreVersion}")
+    testImplementation("com.google.truth.extensions:truth-java8-extension:${truthCoreVersion}")
+
 
     // mockito
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
