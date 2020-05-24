@@ -3,13 +3,14 @@ package com.greatworksinc.concepts.lambdas;
 public class Song {
   private final String title;
   private final String genre;
-  private final double trackLength;
+  private final int trackLength;
   private final int starRating;
 
-  public Song(String title, String genre, double trackLength) {
+  public Song(String title, String genre, int trackLength, int starRating) {
     this.title = title;
     this.genre = genre;
     this.trackLength = trackLength;
+    this.starRating = starRating;
   }
 
   public String getTitle() {
@@ -20,7 +21,11 @@ public class Song {
     return genre;
   }
 
-  public double getLength() {
+  public int getLength() {
     return trackLength;
+  }
+
+  public int getStarRating() {
+    return starRating;
   }
 }

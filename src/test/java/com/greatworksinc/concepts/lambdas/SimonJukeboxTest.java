@@ -4,15 +4,16 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth8.assertThat;
 
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class SimonJukeboxTest {
-  private final Song song1 = new Song("Song 1", "Music", 99);
-  private final Song song2 = new Song("Song 2", "Music", 1);
-  private final Song song3 = new Song("Song 3", "Music", 300);
-  private final Song song4 = new Song("Song 4", "Music", 56.7);
-  private final Song song5 = new Song("Song 5", "Music", 38);
+  private final Song song1 = new Song("Song 1", "Music", 99, 3);
+  private final Song song2 = new Song("Song 2", "Music", 1, 5);
+  private final Song song3 = new Song("Song 3", "Not Music", 300, 3);
+  private final Song song4 = new Song("Song 4", "Music", 56, 5);
+  private final Song song5 = new Song("Song 5", "Music", 38, 3);
   private final Album album1 = new Album("Album 1", List.of(song1, song2, song3));
   private final Album album2 = new Album("Album 2", List.of(song4, song5));
   private final Album album3 = new Album("Album 3", List.of(song4));
@@ -53,7 +54,12 @@ class SimonJukeboxTest {
   }
 
   @Test
-  void computeTotalLengthByGenre() {}
+  void computeTotalLengthByGenre() {
+    Map<String, Integer> results = jukebox.computeTotalLengthByGenre(List.of(album1, album2));
+    assertThat(results).hasSize(2);
+    assertThat(results).containsEntry("Music", 194);
+    assertThat(results).containsEntry("Not Music", 300);
+  }
 
   @Test
   void findOneSong() {
@@ -83,8 +89,28 @@ class SimonJukeboxTest {
   }
 
   @Test
-  void findShortSongs() {}
+  void findShortSongs() {
+    assertThat(jukebox.findShortSongs(List.of(musician1)))
+        .containsExactly(song2, song4, song5)
+        .inOrder();
+  }
 
   @Test
-  void findStarSongs() {}
+  void findStarSongs_3stars() {
+    assertThat(jukebox.findStarSongs(List.of(album1, album2), 3))
+        .containsExactly(song1, song3, song5)
+        .inOrder();
+  }
+
+  @Test
+  void findStarSongs_4stars() {
+    assertThat(jukebox.findStarSongs(List.of(album1, album2), 4)).isEmpty();
+  }
+
+  @Test
+  void findStarSongs_5stars() {
+    assertThat(jukebox.findStarSongs(List.of(album1, album2), 5))
+        .containsExactly(song2, song4)
+        .inOrder();
+  }
 }

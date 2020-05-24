@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SimonJukebox implements Jukebox {
   @Override
@@ -19,7 +20,8 @@ public class SimonJukebox implements Jukebox {
 
   @Override
   public Map<String, Integer> computeTotalLengthByGenre(List<Album> albums) {
-    return null;
+    return findSongStreamFromAlbumStream(albums.stream())
+        .collect(Collectors.groupingBy(Song::getGenre, Collectors.summingInt(Song::getLength)));
   }
 
   @Override
@@ -27,32 +29,36 @@ public class SimonJukebox implements Jukebox {
     return albums.stream().map(Album::getSongs).flatMap(Collection::stream).findFirst();
   }
 
+  private Stream<Song> findSongStreamFromAlbumStream(Stream<Album> albums) {
+    return albums.map(Album::getSongs).flatMap(Collection::stream);
+  }
+
+  private Stream<Album> findAlbumStreamFromMusicianStream(Stream<Musician> musicians) {
+    return musicians.map(Musician::getAlbums).flatMap(Collection::stream);
+  }
+
   @Override
   public List<Song> findAllSongsForAlbums(List<Album> albums) {
-    return albums.stream()
-        .map(Album::getSongs)
-        .flatMap(Collection::stream)
-        .collect(Collectors.toList());
+    return findSongStreamFromAlbumStream(albums.stream()).collect(Collectors.toList());
   }
 
   @Override
   public List<Song> findAllSongsForMusicians(List<Musician> musicians) {
-    return findAllSongsForAlbums(
-        musicians.stream()
-            .map(Musician::getAlbums)
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList()));
+    return findSongStreamFromAlbumStream(findAlbumStreamFromMusicianStream(musicians.stream()))
+        .collect(Collectors.toList());
   }
 
   @Override
   public List<Song> findShortSongs(List<Musician> musicians) {
-    return findAllSongsForMusicians(musicians).stream()
+    return findSongStreamFromAlbumStream(findAlbumStreamFromMusicianStream(musicians.stream()))
         .filter(SHORT_SONG)
         .collect(Collectors.toList());
   }
 
   @Override
   public List<Song> findStarSongs(List<Album> albums, int star) {
-    return null;
+    return findSongStreamFromAlbumStream(albums.stream())
+        .filter(song -> song.getStarRating() == star)
+        .collect(Collectors.toList());
   }
 }
