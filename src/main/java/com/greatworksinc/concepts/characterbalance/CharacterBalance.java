@@ -48,7 +48,8 @@ public class CharacterBalance {
   }
 
   public static List<Boolean> checkIfStringsBalanced(List<String> inputList) {
-    return inputList.stream()
+    return inputList
+        .stream()
         .map(CharacterBalance::checkIfStringBalanced)
         .collect(Collectors.toList());
   }
